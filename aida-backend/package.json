@@ -1,0 +1,26 @@
+{
+  "name": "cinemo-internal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Cinemo GmbH",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^3.2.6",
+    "q": "^1.5.1"
+  },
+  "config": {
+    "service": {
+      "port": 0
+    },
+    "mongodb": {
+      "url": "mongodb://MyMongoDB:27017",
+      "databaseName": "food",
+      "collectionName": "fruits"
+    }
+  }
+}
