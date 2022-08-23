@@ -1,0 +1,18 @@
+db.createUser({ user: "admin", pwd: "admin",
+		roles: [ "readWrite", "dbAdmin" ] )
+
+use {db_name}
+
+docker run -d --name mymongodbserver mongo:latest
+docker inspect -f '{{.NetworkSettings.IPAddress}}' mymongodbserver
+Inside CLI
+==========
+
+mongo
+
+show dbs
+db.help()
+
+
+docker build . -t mybackendappimage
+docker run -d --name mybackendapp mybackendappimage
