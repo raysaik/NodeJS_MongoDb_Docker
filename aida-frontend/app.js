@@ -159,7 +159,7 @@ function attachHandlers() {
 
 function createRoutes() {
 
-    app.get('/api/health', (req, res) => res.send(''));
+    app.get('/api/health', (req, res) => res.send('Frontend healthy'));
     app.get('/api/customers/:customerId', readCustomer);
     app.post('/api/customers', CreateCustomer);
 

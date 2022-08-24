@@ -16,16 +16,16 @@
   },
   "config": {
     "service": {
-      "port": 0
+      "port": 9000
     },
     "dependencies": {
-      "cinemoInternalUrl": ""
+      "cinemoInternalUrl": "http://localhost:8080/"
     },
     "kinesis": {
-      "region": "",
-      "endpoint": "",
-      "streamName": "",
-      "partitionKey": ""
+      "region": "us-east-1",
+      "endpoint": "kinesis.us-east-1.amazonaws.com",
+      "streamName": "myteststream",
+      "partitionKey": "customer"
     }
   }
 }

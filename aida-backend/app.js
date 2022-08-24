@@ -78,7 +78,7 @@ function attachHandlers() {
 
 function createRoutes() {
 
-    app.get('/api/health', (req, res) => res.send(''));
+    app.get('/api/health', (req, res) => res.send('Healthy'));
     app.get('/api/cache/:cacheId', readCache);
     app.post('/api/cache', writeCache);
 

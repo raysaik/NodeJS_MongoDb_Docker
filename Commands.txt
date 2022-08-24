@@ -15,4 +15,9 @@ db.help()
 
 
 docker build . -t mybackendappimage
-docker run -d --name mybackendapp mybackendappimage
+docker run -p 8080:8080 -d --name mybackendapp mybackendappimage
+
+
+
+docker build . -t myfrontendappimage
+docker run -p 9000:9000 -d --name myfrontendapp myfrontendappimage
