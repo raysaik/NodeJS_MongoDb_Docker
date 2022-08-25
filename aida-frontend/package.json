@@ -1,12 +1,12 @@
 {
-  "name": "aida-public",
+  "name": "teststudy-public",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "aida GmbH",
+  "author": "teststudy GmbH",
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.464.0",
@@ -19,7 +19,7 @@
       "port": 9000
     },
     "dependencies": {
-      "aidaInternalUrl": "http://172.17.0.3:8080"
+      "teststudyInternalUrl": "http://172.17.0.3:8080"
     },
     "kinesis": {
       "region": "us-east-1",

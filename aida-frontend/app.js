@@ -30,7 +30,7 @@ function readCustomer(req, res) {
     writeLog(`Reading customer ${req.params.customerId}`, traceId);
 
     axios
-        .get(config.dependencies.aidaInternalUrl + '/api/cache/' + req.params.customerId)
+        .get(config.dependencies.teststudyInternalUrl + '/api/cache/' + req.params.customerId)
         .then((response) => {
             writeMetric('readCustomer.success');
             writeLog(`Successfully read customer with customerId '${req.params.customerId}'`, traceId);
@@ -67,7 +67,7 @@ function CreateCustomer(req, res) {
     };
 
     axios
-        .post(config.dependencies.aidaInternalUrl + '/api/cache', customer)
+        .post(config.dependencies.teststudyInternalUrl + '/api/cache', customer)
         .then((response) => {
             writeMetric('createCustomer.success');
             writeLog(`Successfully created customer with name ${req.body.name}`, traceId);
@@ -91,7 +91,7 @@ function writeLog(message, traceId) {
     let frame = {
         type: 'logs',
         data: {
-            appId: 'aida-public',
+            appId: 'teststudy-public',
             traceId: traceId,
             message: message,
             timestamp: new Date().getTime()
@@ -117,7 +117,7 @@ function writeMetric(name) {
     let frame = {
         type: 'metrics',
         data: {
-            appId: 'aida-public',
+            appId: 'teststudy-public',
             name: name,
             count: 1,
             timestamp: new Date().getTime()
@@ -168,7 +168,7 @@ function createRoutes() {
 
 function serve() {
     
-    app.listen(config.service.port, () => console.log(`aida-public listening on port ${config.service.port}`));
+    app.listen(config.service.port, () => console.log(`teststudy-public listening on port ${config.service.port}`));
     
     return q();
 }
