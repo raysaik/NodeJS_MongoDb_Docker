@@ -1,12 +1,12 @@
 {
-  "name": "cinemo-public",
+  "name": "aida-public",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Cinemo GmbH",
+  "author": "aida GmbH",
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.464.0",
@@ -19,7 +19,7 @@
       "port": 9000
     },
     "dependencies": {
-      "cinemoInternalUrl": "http://localhost:8080/"
+      "aidaInternalUrl": "http://172.17.0.3:8080"
     },
     "kinesis": {
       "region": "us-east-1",

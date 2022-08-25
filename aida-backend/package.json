@@ -1,12 +1,12 @@
 {
-  "name": "cinemo-internal",
+  "name": "aida-internal",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Cinemo GmbH",
+  "author": "aida GmbH",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",

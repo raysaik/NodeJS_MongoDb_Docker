@@ -90,7 +90,7 @@ function createRoutes() {
 
 function serve() {
     
-    app.listen(config.service.port, () => console.log(`cinemo-internal listening on port ${config.service.port}`));
+    app.listen(config.service.port, () => console.log(`aida-internal listening on port ${config.service.port}`));
     
     return q();
 }
