@@ -1,4 +1,0 @@
-apiVersion: v2
-name: teststudyApp
-description: A Helm chart for teststudy
-version: v0.1.0
