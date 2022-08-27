@@ -16,6 +16,7 @@ environment:
 
 app:
   name: teststudyapibackend
+  frontendappname: teststudyapifrontend
 
 container:
   requests:
@@ -26,6 +27,7 @@ container:
     memory: 512Mi
 
 mongodburl: "mongodb://172.17.0.2:27017/"
+
 service:
   internalPort: 8080
   externalPort: 8080
