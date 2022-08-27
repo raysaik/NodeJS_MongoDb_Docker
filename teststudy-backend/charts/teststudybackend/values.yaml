@@ -1,0 +1,32 @@
+# Default values for myChart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 2
+
+image:
+  repository: "<ecr-repo-url>"
+
+ingress:
+  basedomain: app.teststudy.com
+  name: ingressStaging
+
+environment:
+  name: staging
+
+app:
+  name: teststudyapibackend
+
+container:
+  requests:
+    cpu: 200m
+    memory: 256Mi
+  limits:
+    cpu: 400m
+    memory: 512Mi
+
+mongodburl: "mongodb://172.17.0.2:27017/"
+service:
+  internalPort: 8080
+  externalPort: 8080
+

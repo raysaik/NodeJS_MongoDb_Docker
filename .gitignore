@@ -1,4 +1,5 @@
 # Logs
+myChart/
 logs
 *.log
 npm-debug.log*
