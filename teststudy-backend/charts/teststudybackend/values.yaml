@@ -7,10 +7,6 @@ replicaCount: 2
 image:
   repository: "<ecr-repo-url>"
 
-ingress:
-  basedomain: app.teststudy.com
-  name: ingressStaging
-
 environment:
   name: staging
 
