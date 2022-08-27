@@ -1,61 +1,103 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "myChart.fullname" . }}
+  name: {{ .Values.app.name }}
   labels:
-    {{- include "myChart.labels" . | nindent 4 }}
+    app: {{ .Values.app.name }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
   selector:
     matchLabels:
-      {{- include "myChart.selectorLabels" . | nindent 6 }}
+      app: {{ .Values.app.name }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
-        {{- include "myChart.selectorLabels" . | nindent 8 }}
+        app: {{ .Values.app.name }}
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "myChart.serviceAccountName" . }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        runAsUser: 1000
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
+      - name: {{ .Values.app.frontendapiname }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: {{ .Values.container.requests.cpu }}
+            memory: {{ .Values.container.requests.memory }}
+          limits:
+            cpu: {{ .Values.container.limits.cpu }}
+            memory: {{ .Values.container.limits.memory }}
+        env:
+          - name: ASPNETCORE_ENVIRONMENT
+            value: {{ .Values.environment.name }}
+          - name: keyvaultidentifier
+            valueFrom:
+              secretKeyRef:
+               name: {{ template "fullname" . }}
+               key: keyvaultIdentifier
+          - name: ReleaseNo
+            valueFrom:
+              secretKeyRef:
+               name: {{ template "fullname" . }}
+               key: releaseNo
+          - name: BuildId
+            valueFrom:
+              secretKeyRef:
+               name: {{ template "fullname" . }}
+               key: buildId
+          - name: clientid
+            valueFrom:
+              secretKeyRef:
+               name: {{ template "fullname" . }}
+               key: clientId
+          - name: clientsecret
+            valueFrom:
+              secretKeyRef:
+               name: {{ template "fullname" . }}
+               key: clientSecret
+        readinessProbe:
+          httpGet:
+            path: /mail-api/hc
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 3
+          timeoutSeconds: 5
+          failureThreshold: 3
+          successThreshold: 1
+        livenessProbe:
+          httpGet:
+            path: /mail-api/self
+            port: 8080
+            httpHeaders:
+            - name: Authorization
+              value: {{ .Values.httpheader.auth_token }}
+            - name: X-Azure-FDID
+              value: {{ .Values.httpheader.fd_id }}
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          timeoutSeconds: 5
+          failureThreshold: 3
+          successThreshold: 1
+        securityContext:
+          privileged: false
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          runAsUser: 10000
+          runAsGroup: 30000
+{{- if or (eq .Values.environment.name "Perf") (eq .Values.environment.name "Prd") }}
       nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        poolname: otherapis
+{{ end }}
+      dnsPolicy: "Default"
+      dnsConfig:  
+        options:  
+          - name: single-request-reopen  
