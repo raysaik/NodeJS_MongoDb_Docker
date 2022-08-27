@@ -39,19 +39,19 @@ spec:
           - name: MONGODB_URL
             valueFrom:
               secretKeyRef:
-               name: 
-               key:      
+               name: "{{ .Values.app.name }}-secret"
+               key:  mongodburl    
         livenessProbe:
           httpGet:
             path: /api/health
-            port: 8080
+            port: {{ .Values.service.internalPort }}
             scheme: HTTP
           failureThreshold: 3
           successThreshold: 1     
         readinessProbe:
           httpGet:
             path: /api/checkDbConnection
-            port: 8080
+            port: {{ .Values.service.internalPort }}
             scheme: HTTP
           failureThreshold: 3
           successThreshold: 1
