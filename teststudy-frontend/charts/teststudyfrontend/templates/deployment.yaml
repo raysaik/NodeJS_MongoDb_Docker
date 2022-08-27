@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Values.app.name }}"
+  labels:
+    app: "{{ .Values.app.name }}"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: "{{ .Values.app.name }}"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Values.app.name }}"
+    spec:
+      securityContext:
+        runAsUser: 1000
+      containers:
+      - name: "{{ .Values.app.frontendapiname }}"
+        image: "{{ .Values.image.repository }}:latest"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: {{ .Values.service.internalPort }}
+        resources:
+          requests:
+            cpu: {{ .Values.container.requests.cpu }}
+            memory: {{ .Values.container.requests.memory }}
+          limits:
+            cpu: {{ .Values.container.limits.cpu }}
+            memory: {{ .Values.container.limits.memory }}
+        env:
+          - name: APP_ENVIRONMENT
+            value: "{{ .Values.environment.name }}"
+          - name: BACKENDAPI_URL
+            valueFrom:
+              secretKeyRef:
+               name: "{{ .Values.app.name }}-secret"
+               key:  backendserviceurl    
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: {{ .Values.service.internalPort }}
+            scheme: HTTP
+          failureThreshold: 3
+          successThreshold: 1     
+        readinessProbe:
+          httpGet:
+            path: /api/checkBackendApiConnection
+            port: {{ .Values.service.internalPort }}
+            scheme: HTTP
+          failureThreshold: 3
+          successThreshold: 1

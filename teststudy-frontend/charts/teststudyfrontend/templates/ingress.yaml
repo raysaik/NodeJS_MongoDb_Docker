@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "{{ .Values.app.name }}-ingress"
+  labels:
+    app: "{{ .Values.app.name }}"
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  tls:
+  - hosts:
+    - "{{ .Values.ingress.basedomain }}"
+    secretName: "{{ .Values.app.name }}-tlssecret"
+  rules:
+  - host: "{{ .Values.ingress.basedomain }}"
+    http:
+      paths:
+      - backend:
+          service:
+            name: "{{ .Values.app.name }}-service"
+            port: 
+              number: {{ .Values.service.externalPort }}
+        path: /api
+        pathType: Prefix

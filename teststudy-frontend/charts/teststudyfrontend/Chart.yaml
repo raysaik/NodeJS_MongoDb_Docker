@@ -1,0 +1,4 @@
+apiVersion: v2
+name: teststudyapifrontendChart
+description: A Helm chart for teststudy frontend
+version: v1.0.0
