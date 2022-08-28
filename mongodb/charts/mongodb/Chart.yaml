@@ -1,0 +1,4 @@
+apiVersion: v2
+name: mongodbstandalonechart
+description: A Helm chart for teststudy backend
+version: v1.0.0
