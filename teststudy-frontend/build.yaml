@@ -3,11 +3,11 @@ pool:
 
 variables:
   registryServerName: '<<ecr endpoint id>>.ecr.us-east-1.amazonaws.com'
-  imageName: 'teststudybackendapi'
+  imageName: 'teststudyfrontendapi'
 
 steps:
-- bash: docker build -f $(system.defaultWorkingDirectory)/teststudy-backend/Dockerfile -t $(registryServerName)/$(imageName):$(build.buildId)
-  displayName: 'docker build for teststudy-backend'
+- bash: docker build -f $(system.defaultWorkingDirectory)/teststudy-frontend/Dockerfile -t $(registryServerName)/$(imageName):$(build.buildId)
+  displayName: 'docker build for teststudy-frontend'
   continueOnError: false
 
 - bash: docker push $(registryServerName)/$(imageName):$(build.buildId)
@@ -18,10 +18,10 @@ steps:
   inputs:
     helmVersionToInstall: <helm-version>
 
-- bash: helm package --version $(build.buildId) --destination $(build.artifactStagingDirectory) $(system.defaultWorkingDirectory)/teststudy-backend/charts/teststudybackend
+- bash: helm package --version $(build.buildId) --destination $(build.artifactStagingDirectory) $(system.defaultWorkingDirectory)/teststudy-frontend/charts/teststudyfrontend
   displayName: 'helm package creation'
 
 - bash: |
     helm registry login --username AWS --password-stdin ***************
-    helm push $(build.artifactStagingDirectory)/teststudybackend-$(build.buildId).tgz
+    helm push $(build.artifactStagingDirectory)/teststudyfrontend-$(build.buildId).tgz
   displayName: 'ECR helm push'
