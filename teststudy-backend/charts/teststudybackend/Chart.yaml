@@ -1,4 +1,4 @@
 apiVersion: v2
-name: teststudyapibackendChart
+name: teststudyapibackendchart
 description: A Helm chart for teststudy backend
 version: v1.0.0
