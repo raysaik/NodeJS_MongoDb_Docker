@@ -22,7 +22,7 @@ container:
     cpu: 400m
     memory: 512Mi
 
-mongodburl: "mongodb://172.17.0.2:27017/"
+mongodburl:  "http://mongodbapp-service.default.svc.cluster.local"
 
 service:
   internalPort: 8080
