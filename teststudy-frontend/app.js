@@ -30,7 +30,7 @@ function readCustomer(req, res) {
     writeLog(`Reading customer ${req.params.customerId}`, traceId);
 
     axios
-        .get(config.dependencies.teststudyInternalUrl + '/api/cache/' + req.params.customerId)
+        .get(process.env.BACKENDAPI_URL + '/api/cache/' + req.params.customerId)
         .then((response) => {
             writeMetric('readCustomer.success');
             writeLog(`Successfully read customer with customerId '${req.params.customerId}'`, traceId);
@@ -67,7 +67,7 @@ function CreateCustomer(req, res) {
     };
 
     axios
-        .post(config.dependencies.teststudyInternalUrl + '/api/cache', customer)
+        .post(process.env.BACKENDAPI_URL + '/api/cache', customer)
         .then((response) => {
             writeMetric('createCustomer.success');
             writeLog(`Successfully created customer with name ${req.body.name}`, traceId);
@@ -157,10 +157,24 @@ function attachHandlers() {
     return q();
 }
 
+function checkBackendApiConnection(req, res){
+    axios
+        .get(process.env.BACKENDAPI_URL + '/api/health')
+        .then((response) => {
+            res.status(200);
+            res.send('backend health check success');
+        })
+        .catch(error => {
+            res.status(error.response.status);
+            res.send(error.response.data);
+        });
+}
+
 function createRoutes() {
 
     app.get('/api/health', (req, res) => res.send('Frontend healthy'));
     app.get('/api/customers/:customerId', readCustomer);
+    app.get('/api/checkBackendApiConnection', checkBackendApiConnection);
     app.post('/api/customers', CreateCustomer);
 
     return q();

@@ -1,0 +1,35 @@
+# Default values for myChart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 2
+
+image:
+  repository: "myfrontendappimage"
+  imagePullPolicy: Never
+
+ingress:
+  basedomain: kubernetes.docker.internal
+
+environment:
+  name: local
+
+app:
+  name: teststudyapifrontend
+
+container:
+  requests:
+    cpu: 200m
+    memory: 256Mi
+  limits:
+    cpu: 400m
+    memory: 512Mi
+
+backendserviceurl: "http://teststudyapibackend-service:8080"
+
+certificate: ""
+key: ""
+
+service:
+  internalPort: 9000
+  externalPort: 9000
