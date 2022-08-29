@@ -31,3 +31,14 @@ helm install --replace teststudyapibackendchart charts/teststudybackend/ --value
 helm install --replace mongodbstandalonechart charts/mongodb/ --values charts/mongodb/values.yaml
 
 ping mongodbapp-0.mongodbapp-service.default.cluster.local 
+
+frontend
+=========
+
+Add images to minikube 
+-----------------------
+minikube image build . -t myfrontendappimage
+helm install --replace teststudyapifrontendchart charts/teststudyfrontend/ --values charts/teststudyfrontend/values.minikube.yaml
+helm delete teststudyapifrontendchart
+minikube image rm myfrontendappimage
+
