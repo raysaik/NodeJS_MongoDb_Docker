@@ -1,7 +1,4 @@
-db.createUser({ user: "admin", pwd: "admin",
-		roles: [ "readWrite", "dbAdmin" ] )
 
-use {db_name}
 
 docker run -d --name mymongodbserver mongo:latest
 docker inspect -f '{{.NetworkSettings.IPAddress}}' mymongodbserver
@@ -9,9 +6,14 @@ Inside CLI
 ==========
 
 mongo
-
+=====
 show dbs		
 db.help()
+use {customer}
+db.createCollection("customers")
+db.customers.insert( { name: "SaikatRay" } )
+db.customers.find()
+
 
 
 docker build . -t mybackendappimage
@@ -25,4 +27,4 @@ docker run -p 9000:9000 -d --name myfrontendapp myfrontendappimage
 run helm install locally
 ========================
 helm install teststudyapibackendchart charts/teststudybackend/ --values charts/teststudybackend/values.yaml
-helm install mongodbstandalonechart charts/mongodb/ --values charts/mongodb/values.yaml
+helm install --replace mongodbstandalonechart charts/mongodb/ --values charts/mongodb/values.yaml

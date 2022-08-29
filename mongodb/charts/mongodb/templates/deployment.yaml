@@ -16,7 +16,7 @@ spec:
         app: "{{ .Values.app.name }}"      
     spec:    
       securityContext: 
-        runAsUser: 1000
+        runAsUser: 0
       terminationGracePeriodSeconds: {{ .Values.mongodb.terminationGracePeriodSeconds }}
       containers:
         - name: mongodb
