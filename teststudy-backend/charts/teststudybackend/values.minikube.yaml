@@ -5,11 +5,10 @@
 replicaCount: 2
 
 image:
-  repository: "<ecr-repo-url>"
-  imagePullPolicy: Always
-
+  repository: "mybackendappimage"
+  imagePullPolicy: Never
 environment:
-  name: staging
+  name: local
 
 app:
   name: teststudyapibackend
@@ -23,7 +22,7 @@ container:
     cpu: 400m
     memory: 512Mi
 
-mongodburl:  "http://mongodbapp-service.default.svc.cluster.local"
+mongodburl:  "http://mongodbapp-service:27017"
 
 service:
   internalPort: 8080

@@ -45,6 +45,14 @@ function readCache(req, res) {
       });
 }
 
+function checkDbConnection(req, res){
+    if (mongoClient.isConnected()){
+        res.status(200);
+    }
+    else{
+        res.status(504);
+    }
+}
 function writeCache(req, res) {
 
     if (!mongoClient.isConnected()) {
@@ -79,6 +87,7 @@ function attachHandlers() {
 function createRoutes() {
 
     app.get('/api/health', (req, res) => res.send('Healthy'));
+    app.get('/api/checkDbConnection', checkDbConnection);
     app.get('/api/cache/:cacheId', readCache);
     app.post('/api/cache', writeCache);
 
