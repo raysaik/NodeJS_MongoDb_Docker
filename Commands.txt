@@ -10,7 +10,7 @@ Inside CLI
 
 mongo
 
-show dbs
+show dbs		
 db.help()
 
 
@@ -21,3 +21,8 @@ docker run -p 8080:8080 -d --name mybackendapp mybackendappimage
 
 docker build . -t myfrontendappimage
 docker run -p 9000:9000 -d --name myfrontendapp myfrontendappimage
+
+run helm install locally
+========================
+helm install teststudyapibackendchart charts/teststudybackend/ --values charts/teststudybackend/values.yaml
+helm install mongodbstandalonechart charts/mongodb/ --values charts/mongodb/values.yaml

@@ -24,10 +24,10 @@ spec:
           imagePullPolicy: Always
           env:          
             - name: MONGODB_PORT_NUMBER
-              value: {{ .Values.mongodb.port }}   
+              value: "{{ .Values.mongodb.port }}"   
           volumeMounts:
             - name: datadir
-              mountPath: {{ .Values.mongodb.mountPath }}  
+              mountPath: "{{ .Values.mongodb.mountPath }}" 
       volumes:
         - name: datadir
           persistentVolumeClaim:
