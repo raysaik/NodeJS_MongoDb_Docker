@@ -9,7 +9,7 @@ image:
   imagePullPolicy: Never
 
 ingress:
-  basedomain: kubernetes.docker.internal
+  basedomain: myfrontendapp.info
 
 environment:
   name: local
