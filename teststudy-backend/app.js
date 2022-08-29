@@ -48,10 +48,13 @@ function readCache(req, res) {
 function checkDbConnection(req, res){
     if (mongoClient.isConnected()){
         res.status(200);
+        res.send('Connected');
     }
     else{
         res.status(504);
+        res.send('Not Connected');
     }
+    return;
 }
 function writeCache(req, res) {
 
@@ -108,17 +111,19 @@ function connectMongoDb() {
 
     let deferred = q.defer();
 
-    mongoClient = new MongoClient(config.mongodb.url);
+    //mongoClient = new MongoClient(config.mongodb.url);
+    //Get the value from Environment, so that we can pass different values from Kubernetes
+    mongoClient = new MongoClient(process.env.MONGODB_URL);
 
     mongoClient
         .connect(function(err) {
             if (!err) {
-                console.log(`Successfully connected to MongoDB at '${config.mongodb.url}'`);
+                console.log(`Successfully connected to MongoDB at '${process.env.MONGODB_URL}'`);
                 mongoDatabase = mongoClient.db(config.mongodb.databaseName);
                 mongoCollection = mongoDatabase.collection(config.mongodb.collectionName);
                 deferred.resolve();
             } else {
-                console.log(`Failed to connect to MongoDB at '${config.mongodb.url}'`);
+                console.log(`Failed to connect to MongoDB at '${process.env.MONGODB_URL}'`);
                 deferred.reject(err);
             }
         });

@@ -22,7 +22,7 @@ container:
     cpu: 400m
     memory: 512Mi
 
-mongodburl:  "http://mongodbapp-service:27017"
+mongodburl:  "mongodb://mongodbapp-service:27017"
 
 service:
   internalPort: 8080

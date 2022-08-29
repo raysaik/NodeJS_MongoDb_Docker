@@ -1,12 +1,13 @@
 
+mongo
+=====
 
 docker run -d --name mymongodbserver mongo:latest
 docker inspect -f '{{.NetworkSettings.IPAddress}}' mymongodbserver
 Inside CLI
 ==========
 
-mongo
-=====
+
 show dbs		
 db.help()
 use {customer}
@@ -26,5 +27,7 @@ docker run -p 9000:9000 -d --name myfrontendapp myfrontendappimage
 
 run helm install locally
 ========================
-helm install teststudyapibackendchart charts/teststudybackend/ --values charts/teststudybackend/values.yaml
+helm install --replace teststudyapibackendchart charts/teststudybackend/ --values charts/teststudybackend/values.minikube.yaml
 helm install --replace mongodbstandalonechart charts/mongodb/ --values charts/mongodb/values.yaml
+
+ping mongodbapp-0.mongodbapp-service.default.cluster.local 

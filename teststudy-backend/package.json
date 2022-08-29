@@ -18,7 +18,7 @@
       "port": 8080
     },
     "mongodb": {
-      "url": "mongodb://172.17.0.2:27017/",
+      "url": "",
       "databaseName": "customerDb",
       "collectionName": "customers"
     }

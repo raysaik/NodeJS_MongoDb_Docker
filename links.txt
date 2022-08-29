@@ -1,1 +1,6 @@
 https://nodejs.org/en/docs/guides/nodejs-docker-webapp/
+
+changes:
+
+readiness endpoint
+env variables
