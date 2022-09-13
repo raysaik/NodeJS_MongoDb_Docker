@@ -7,7 +7,7 @@ docker inspect -f '{{.NetworkSettings.IPAddress}}' mymongodbserver
 Inside CLI
 ==========
 
-
+helm install --replace mongodbstandalonechart charts/mongodb/ --values charts/mongodb/values.minikube.yaml
 show dbs		
 db.help()
 use {customer}
@@ -39,6 +39,6 @@ Add images to minikube
 -----------------------
 minikube image build . -t myfrontendappimage
 helm install --replace teststudyapifrontendchart charts/teststudyfrontend/ --values charts/teststudyfrontend/values.minikube.yaml
-helm delete teststudyapifrontendchart
+helm delete charts/teststudyfrontend/teststudyapifrontendchart
 minikube image rm myfrontendappimage
 

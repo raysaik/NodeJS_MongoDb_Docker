@@ -1,0 +1,14 @@
+mongodb:
+  port: 27017
+  terminationGracePeriodSeconds: 200
+  mountPath: /data/mongodb
+
+environment:
+  name: staging
+
+app:
+  name: mongodbapp
+  backendappname: teststudyapibackend
+
+
+
