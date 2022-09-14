@@ -39,6 +39,6 @@ Add images to minikube
 -----------------------
 minikube image build . -t myfrontendappimage
 helm install --replace teststudyapifrontendchart charts/teststudyfrontend/ --values charts/teststudyfrontend/values.minikube.yaml
-helm delete charts/teststudyfrontend/teststudyapifrontendchart
+helm delete teststudyapifrontendchart
 minikube image rm myfrontendappimage
 
